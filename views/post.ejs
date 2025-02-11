@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <!-- Logout Button -->
+    <div class="flex justify-end">
+        <a href="/logout" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+            Logout
+        </a>
+    </div>
+
+    <!-- Greeting Section -->
+    <div class="text-center my-6">
+        <h3 class="text-2xl font-semibold">Hello, <%= user.username %> !</h3>  
+        <h5 class="text-lg text-gray-600 mt-2">You can create a new post below:</h5>
+    </div>
+
+    <!-- Post Creation Section -->
+    <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <form action="/post" method="POST" class="flex flex-col space-y-4">
+            <textarea name="content" class="border border-gray-300 p-3 rounded-lg w-full resize-none focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Write your post..." required></textarea>
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                Post
+            </button>
+        </form>
+    </div>
+
+    <!-- User Posts Section -->
+    <div class="max-w-xl mx-auto mt-8">
+        <h3 class="text-xl font-semibold mb-4">Your Posts</h3>
+        
+        <% user.posts.reverse().forEach((post, index) => { %>
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
+                    
+                    <!-- Username -->
+                    <h3 class="text-gray-800">@<%= user.username %></h3>
+                    
+                    <!-- Post Content -->
+                    <p class="text-gray-800"><%= post.content %></p>
+                    
+                    <!-- Date and Actions (Edit & Like in the same row) -->
+                    <div class="flex justify-between items-center mt-2">
+                        <small class="text-gray-500">Posted on <%= post.date %></small>
+                        
+                        <div class="flex space-x-4">
+                            <!-- Edit Button -->
+                            <a href="/edit/<%= post.id %>" class="text-blue-500 hover:text-blue-700 flex items-center">
+                                Edit
+                            </a>
+
+                            <!-- Like Button -->
+                             
+                            <a href="/like/<%= post.id %>" class="text-gray-500 hover:text-red-500 flex items-center">
+                                Like
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <% }) %>
+        
+    </div>
+
+</body>
+</html>
