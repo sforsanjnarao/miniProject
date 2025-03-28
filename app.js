@@ -117,7 +117,7 @@ app.get('/logout',(req,res)=>{
     res.redirect('/login')
 })
 
-app.post('/post',isloggedin, async (req,res)=>{
+app.post('/post', isloggedin, async (req,res)=>{
     const {email}=req.user    //getting the data from the middleware, it store data of user in req.user
     let user= await userModel.findOne({email})
     const {content}=req.body   //getting the data from the frontend
